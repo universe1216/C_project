@@ -1,7 +1,8 @@
-#include "Header and Implementation/ppm functions.h"
+#include "Header and Implementation/filters.h"
+#include "Header and Implementation/patterns.h"
+#include "Header and Implementation/fractals.h"
 
 int main() {
-
 	fprintf(stdout,"Process has started.\nPlease wait patiently...\n");
 
 
@@ -181,18 +182,18 @@ int main() {
 	writePPM("./Examples/Patterns/Filled Shapes/yellow_star.ppm",filledShape);
 
 	filledShape=createPPMImage(500,500,BLACK);
-	printCircles(0,0,200,0,1,filledShape,RED);
-	printCircles(0,100,100,0,1,filledShape,RED);
-	printCircles(0,-100,100,0,1,filledShape,RED);
-	fillRegion(-100,0,WHITE,BLACK,filledShape);
-	fillRegion(0,-100,WHITE,BLACK,filledShape);
-	fillRegion(100,0,RED,BLACK,filledShape);
-	fillRegion(0,100,RED,BLACK,filledShape);
-	printCircles(0,100,30,0,1,filledShape,WHITE);
-	fillRegion(0,100,WHITE,RED,filledShape);
-	printCircles(0,-100,30,0,1,filledShape,RED);
-	fillRegion(0,-100,RED,WHITE,filledShape);
-	printCircles(0,-100,100,0,1,filledShape,WHITE);
+	printCircles(0,0,200,0,1,filledShape,RED);		//200 yarýçaplý büyük çember
+	printCircles(0,100,100,0,1,filledShape,RED);	//üstteki 100 yarýçaplý orta çember
+	printCircles(0,-100,100,0,1,filledShape,RED);	//alttaki 100 yarýçaplý orta çember
+	fillRegion(-100,0,WHITE,BLACK,filledShape);		//sol tarafýn içini beyaza boya
+	fillRegion(0,-100,WHITE,BLACK,filledShape);		//alt orta çemberin içini beyaza boya
+	fillRegion(100,0,RED,BLACK,filledShape);		//sað tarafýn içini kýrmýzýya boya
+	fillRegion(0,100,RED,BLACK,filledShape);		//üst orta çemberin içini kýrmýzýya boya
+	printCircles(0,100,30,0,1,filledShape,WHITE);	//üstteki 30 yarýçaplý küçük çember
+	fillRegion(0,100,WHITE,RED,filledShape);		//üst küçük çemberin içini beyaza boya
+	printCircles(0,-100,30,0,1,filledShape,RED);	//alt 30 yarýçaplý küçük çember
+	fillRegion(0,-100,RED,WHITE,filledShape);		//alt küçük çemberin içini kýrmýzýya boya
+	printCircles(0,-100,100,0,1,filledShape,WHITE);	//alt orta çemberin kýrmýzý sýnýrlarý beyaza boya
 	writePPM("./Examples/Patterns/Filled Shapes/red_and_white_yin_yang.ppm",filledShape);
 
 	free(filledShape);
@@ -219,13 +220,20 @@ int main() {
 
 
 	PPMImage *Julia=printJulia(1920,1080,1);
-	writePPM("./Examples/Fractals/Julia Set/Julia_set.ppm",Julia);
+	writePPM("./Examples/Fractals/Julia Set/Julia_set_z1.ppm",Julia);
+
+	Julia=printJulia(1920,1080,5);
+	writePPM("./Examples/Fractals/Julia Set/Julia_set_z5.ppm",Julia);
+
+	Julia=printJulia(1920,1080,10);
+	writePPM("./Examples/Fractals/Julia Set/Julia_set_z10.ppm",Julia);
+
+	Julia=printJulia(1920,1080,20);
+	writePPM("./Examples/Fractals/Julia Set/Julia_set_z20.ppm",Julia);
 
 	free(Julia);
 
 
-
 	fprintf(stdout,"Image manipulation complete.\nProcess terminated successfully...");
 	exit(0);
-
 }
