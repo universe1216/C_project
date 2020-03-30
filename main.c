@@ -159,12 +159,12 @@ int main() {
 
 
 
-	PPMImage *filledShape=createPPMImage(500,500,WHITE);
-	drawLine(-100,0,0,100,filledShape,RED);
-	drawLine(100,0,0,100,filledShape,RED);
-	drawLine(-100,0,100,0,filledShape,RED);
-	fillRegion(0,50,RED,BLACK,filledShape);
-	writePPM("./Examples/Patterns/Filled Shapes/filled_triangle.ppm",filledShape);
+	PPMImage *filledShape=createPPMImage(300,300,WHITE);
+	drawLine(-100,-100,0,50,filledShape,RED);
+	drawLine(100,-100,0,50,filledShape,GREEN);
+	drawLine(-100,-100,100,-100,filledShape,YELLOW);
+	fillRegion(0,0,BLUE,WHITE,filledShape);
+	writePPM("./Examples/Patterns/Filled Shapes/blue_triangle.ppm",filledShape);
 
 	filledShape=createPPMImage(310,310,WHITE);
 	drawLine(0,144,-36,60,filledShape,YELLOW);
@@ -177,8 +177,8 @@ int main() {
 	drawLine(48,0,120,60,filledShape,YELLOW);
 	drawLine(120,60,36,60,filledShape,YELLOW);
 	drawLine(36,60,0,144,filledShape,YELLOW);
-	fillRegion(0,0,YELLOW,BLACK,filledShape);
-	writePPM("./Examples/Patterns/Filled Shapes/filled_star.ppm",filledShape);
+	fillRegion(0,0,YELLOW,WHITE,filledShape);
+	writePPM("./Examples/Patterns/Filled Shapes/yellow_star.ppm",filledShape);
 
 	filledShape=createPPMImage(500,500,BLACK);
 	printCircles(0,0,200,0,1,filledShape,RED);
@@ -193,7 +193,7 @@ int main() {
 	printCircles(0,-100,30,0,1,filledShape,RED);
 	fillRegion(0,-100,RED,WHITE,filledShape);
 	printCircles(0,-100,100,0,1,filledShape,WHITE);
-	writePPM("./Examples/Patterns/Filled Shapes/yin_yang_(red_and_white).ppm",filledShape);
+	writePPM("./Examples/Patterns/Filled Shapes/red_and_white_yin_yang.ppm",filledShape);
 
 	free(filledShape);
 
@@ -215,6 +215,14 @@ int main() {
 	writePPM("./Examples/Fractals/Koch Curve/Koch curve and 15 circles.ppm",mix);
 
 	free(mix);
+
+
+
+	PPMImage *Julia=printJulia(1920,1080,1);
+	writePPM("./Examples/Fractals/Julia Set/Julia_set.ppm",Julia);
+
+	free(Julia);
+
 
 
 	fprintf(stdout,"Image manipulation complete.\nProcess terminated successfully...");

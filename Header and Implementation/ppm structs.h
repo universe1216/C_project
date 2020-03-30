@@ -31,9 +31,12 @@ static PPMImage* printRoughHeart(unsigned int size);
 void drawLine(int x1, int y1, int x2, int y2, PPMImage *img, PPMPixel line_color);
 void drawKochCurve(Point p1, Point p2, unsigned int iteration, PPMImage *img);
 void printKochCurve(int x1, int y1, int x2, int y2, unsigned int iteration, PPMImage *img);
+int arePixelsEqual(PPMPixel pixel1, PPMPixel pixel2);
 void fillRegion(int x, int y, PPMPixel fill_color, PPMPixel region_color, PPMImage *img);
 void drawTriangles(float x, float y, float h, PPMImage *img);
 void drawTrianglesv2(float x, float y, float h, PPMImage *img);
 void printSierpinski(float x, float y, float h, PPMImage *img);
+static PPMImage* printJulia(int width, int height, int zoom);
+double* convertHSVtoRGB(double h, double s, double v);
 
 #endif

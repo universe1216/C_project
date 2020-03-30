@@ -221,7 +221,7 @@ static PPMImage* printRainbow(unsigned int width, unsigned int height, unsigned 
 
 static PPMImage* print8bitMandelbrotSet(unsigned int width, unsigned int height) {
 	PPMImage *img = createPPMImage(width,height,BLACK);
-	int index=0,counter=0;
+	unsigned int index=0,counter=0;
 	float i,j,r,x,y;
 	PPMPixel pixel_Array[16] = { {0,0,0}, {175,0,0}, {255,0,0}, {255,127,0},
 								 {255,255,0}, {127,255,0}, {0,255,0}, {0,255,127},
@@ -360,17 +360,21 @@ void printKochCurve(int x1, int y1, int x2, int y2, unsigned int iteration, PPMI
 	drawKochCurve(p1,p2,iteration,img);
 }
 
+int arePixelsEqual(PPMPixel pixel1, PPMPixel pixel2) {
+	if(pixel1.red==pixel2.red && pixel1.green==pixel2.green && pixel1.blue==pixel2.blue)
+		return 1;
+	return 0;
+}
+
 void fillRegion(int x, int y, PPMPixel fill_color, PPMPixel region_color, PPMImage *img) {
 	unsigned int center_index = (img->width*img->height)%4==0 ? img->width*(img->height-1)/2: img->width*img->height/2;
-	if( (img->data[center_index + x - img->width*y - 1].red==fill_color.red  &&  img->data[center_index + x - img->width*y - 1].green==fill_color.green  &&  
-		img->data[center_index + x - img->width*y - 1].blue==fill_color.blue)   ||   !(img->data[center_index + x - img->width*y - 1].red==region_color.red  &&
-		img->data[center_index + x - img->width*y - 1].green==region_color.green  &&  img->data[center_index + x - img->width*y - 1].blue==region_color.blue) )
-		return;
-	img->data[center_index + x - img->width*y - 1] = fill_color;
-	fillRegion(x-1,y,fill_color,region_color,img);
-	fillRegion(x+1,y,fill_color,region_color,img);
-	fillRegion(x,y-1,fill_color,region_color,img);
-	fillRegion(x,y+1,fill_color,region_color,img);
+	if(arePixelsEqual(img->data[center_index + x - img->width*y - 1], region_color) && !arePixelsEqual(img->data[center_index + x - img->width*y - 1], fill_color)) {
+		img->data[center_index + x - img->width*y - 1] = fill_color;
+		fillRegion(x-1,y,fill_color,region_color,img);
+		fillRegion(x+1,y,fill_color,region_color,img);
+		fillRegion(x,y-1,fill_color,region_color,img);
+		fillRegion(x,y+1,fill_color,region_color,img);
+	}
 }
 
 void drawTriangles(float x, float y, float h, PPMImage *img) {
@@ -399,6 +403,52 @@ void printSierpinski(float x, float y, float h, PPMImage *img) {
 	printSierpinski(x, y-2*h/3, h/2, img);
 	printSierpinski(x-h/sqrt(3), y+h/3, h/2, img);
 	printSierpinski(x+h/sqrt(3), y+h/3, h/2, img);
+}
+
+static PPMImage* printJulia(int width, int height, int zoom) {
+	PPMImage *img = createPPMImage(width,height,BLACK);
+	long double cX=-0.7, cY=0.27015, moveX=0.0, moveY=0.0;
+	const unsigned int maxIter=255;
+	int x,y;
+	for(x=0;x<width;x++)
+		for(y=0;y<height;y++) {
+			long double zx = 1.5*(x - width/2)/(0.5*zoom*width) + moveX;
+			long double zy = 1.0*(y - height/2)/(0.5*zoom*height) + moveY;
+			unsigned int i = maxIter;
+			for(i=maxIter;zx*zx+zy*zy<4 && i>0;i--) {
+				long double temp = zx*zx - zy*zy + cX;
+				zy = 2.0*zx*zy + cY;
+				zx = temp;
+			}
+			double *RGB=convertHSVtoRGB((double)i / maxIter * 360, 1, i>1 ? 1 : 0);
+			img->data[img->width*(img->height-1) + x - img->width*y].red = RGB[0];
+			img->data[img->width*(img->height-1) + x - img->width*y].green = RGB[1];
+			img->data[img->width*(img->height-1) + x - img->width*y].blue = RGB[2];
+		}
+	return img;
+}
+
+double* convertHSVtoRGB(double h, double s, double v) {
+	const double c = v*s;
+	const double x = c*(1 - abs((((int)h/60)%2) - 1));
+	const double m = v-c;
+	double* RGB=(double*) malloc(3*sizeof(double));
+	if(h<60)
+		RGB[0]=c, RGB[1]=x, RGB[2]=0;
+	else if(h<120)
+		RGB[0]=x, RGB[1]=c, RGB[2]=0;
+	else if(h<180)
+		RGB[0]=0, RGB[1]=c, RGB[2]=x;
+	else if(h<240)
+		RGB[0]=0, RGB[1]=x, RGB[2]=c;
+	else if(h<300)
+		RGB[0]=x, RGB[1]=0, RGB[2]=c;
+	else
+		RGB[0]=c, RGB[1]=0, RGB[2]=x;
+	unsigned short i;
+	for(i=0;i<3;i++)
+		RGB[i]=(RGB[i]+m)*255;
+	return RGB;
 }
 
 #endif
