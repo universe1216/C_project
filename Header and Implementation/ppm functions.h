@@ -11,6 +11,14 @@
 #define RGB_COMPONENT_COLOR 255
 #define max(a,b) a>b ? a : b
 
+const PPMPixel RED		=	(PPMPixel){255,0,0};
+const PPMPixel GREEN	=	(PPMPixel){0,255,0};
+const PPMPixel BLUE		=	(PPMPixel){0,0,255};
+const PPMPixel YELLOW	=	(PPMPixel){255,255,0};
+const PPMPixel PURPLE	=	(PPMPixel){128,0,128};
+const PPMPixel BLACK	=	(PPMPixel){0,0,0};
+const PPMPixel WHITE	=	(PPMPixel){255,255,255};
+
 static PPMImage* readPPM(const char *filename) {
 	char buff[16];
 	PPMImage *img;
@@ -85,7 +93,7 @@ void writePPM(const char *filename, PPMImage *img) {
 	fclose(fp);
 }
 
-static PPMImage* createPPMImage(unsigned int width, unsigned int height) {
+static PPMImage* createPPMImage(unsigned int width, unsigned int height, PPMPixel color) {
 	PPMImage *img = (PPMImage*) malloc(sizeof(PPMImage));
 	if(!img) {
 		fprintf(stderr,"Unable to allocate memory.\n");
@@ -98,6 +106,9 @@ static PPMImage* createPPMImage(unsigned int width, unsigned int height) {
 		fprintf(stderr,"Unable to allocate memory.\n");
 		exit(1);
 	}
+	unsigned int i;
+	for(i=0;i<width*height;i++)
+		img->data[i] = color;
 	return img;
 }
 
@@ -137,7 +148,7 @@ void rotate(PPMImage *img, short iteration) {
 	unsigned short real_iteration = iteration>0 ? iteration%4 : (4 - (-iteration)%4) % 4, k;	//+: clockwise, -: counterclockwise
 	if(img)
 		for(k=0;k<real_iteration;k++) {
-			PPMImage *buffer = createPPMImage(img->width,img->height);
+			PPMImage *buffer = createPPMImage(img->width,img->height,BLACK);
 			unsigned int i,j;
 			for(i=0;i<img->height;i++)
 				for(j=0;j<img->width;j++)
@@ -151,7 +162,7 @@ void rotate(PPMImage *img, short iteration) {
 }
 
 static PPMImage* printRGBstrips(unsigned int width, unsigned int height, unsigned int iteration) {
-	PPMImage *img = createPPMImage(width,3*height*iteration);
+	PPMImage *img = createPPMImage(width,3*height*iteration,BLACK);
 	unsigned int i,j,k,counter=0;
 	for(k=0;k<iteration;k++) {
 		for(i=0;i<height;i++)
@@ -180,7 +191,7 @@ static PPMImage* printRGBstrips(unsigned int width, unsigned int height, unsigne
 }
 
 static PPMImage* printRainbow(unsigned int width, unsigned int height, unsigned int iteration) {
-	PPMImage *img = createPPMImage(width,7*height*iteration);
+	PPMImage *img = createPPMImage(width,7*height*iteration,BLACK);
 	unsigned int i,j,k,counter=0;
 	for(k=0;k<iteration;k++) {
 		for(i=0;i<height;i++)
@@ -209,7 +220,7 @@ static PPMImage* printRainbow(unsigned int width, unsigned int height, unsigned 
 }
 
 static PPMImage* print8bitMandelbrotSet(unsigned int width, unsigned int height) {		//algoritma Uygulama 13'ten alýntý
-	PPMImage *img = createPPMImage(width,height);
+	PPMImage *img = createPPMImage(width,height,BLACK);
 	int index=0,counter=0;
 	float i,j,r,x,y;
 	PPMPixel pixel_Array[16] = { {0,0,0}, {175,0,0}, {255,0,0}, {255,127,0},				//black, ROYGBIV
@@ -225,7 +236,7 @@ static PPMImage* print8bitMandelbrotSet(unsigned int width, unsigned int height)
 }
 
 static PPMImage* printEpicMandelbrotSet(unsigned int width, unsigned int height) {
-	PPMImage *img = createPPMImage(width,height);
+	PPMImage *img = createPPMImage(width,height,BLACK);
 	unsigned int iX, iY, Iteration, counter=0;
 	const unsigned int IterationMax=200;
 	const double CxMin=-2.5, CxMax=1.5, CyMin=-2.0, CyMax=2.0, EscapeRadius=2;
@@ -255,24 +266,23 @@ static PPMImage* printEpicMandelbrotSet(unsigned int width, unsigned int height)
 	return img;
 }
 
-void drawCircle(int xc, int yc, int x, int y, PPMImage *img) {
+void drawCircle(int xc, int yc, int x, int y, PPMImage *img, PPMPixel boundary_color) {
 	unsigned int center_index = (img->width*img->height)%4==0 ? img->width*(img->height-1)/2: img->width*img->height/2;
-	img->data[center_index + xc + x - (yc + y)*img->width - 1] = (PPMPixel){255,0,0};		//çemberi oluþturan 8 ayrý bölmedeki bütün pixel'lerin rengi kýrmýzý
-	img->data[center_index + xc - x - (yc + y)*img->width - 1] = (PPMPixel){255,0,0};
-	img->data[center_index + xc + x - (yc - y)*img->width - 1] = (PPMPixel){255,0,0};
-	img->data[center_index + xc - x - (yc - y)*img->width - 1] = (PPMPixel){255,0,0};
-	img->data[center_index + xc + y - (yc + x)*img->width - 1] = (PPMPixel){255,0,0};
-	img->data[center_index + xc - y - (yc + x)*img->width - 1] = (PPMPixel){255,0,0};
-	img->data[center_index + xc + y - (yc - x)*img->width - 1] = (PPMPixel){255,0,0};
-	img->data[center_index + xc - y - (yc - x)*img->width - 1] = (PPMPixel){255,0,0};
+	img->data[center_index + xc + x - (yc + y)*img->width - 1] = boundary_color;
+	img->data[center_index + xc - x - (yc + y)*img->width - 1] = boundary_color;
+	img->data[center_index + xc + x - (yc - y)*img->width - 1] = boundary_color;
+	img->data[center_index + xc - x - (yc - y)*img->width - 1] = boundary_color;
+	img->data[center_index + xc + y - (yc + x)*img->width - 1] = boundary_color;
+	img->data[center_index + xc - y - (yc + x)*img->width - 1] = boundary_color;
+	img->data[center_index + xc + y - (yc - x)*img->width - 1] = boundary_color;
+	img->data[center_index + xc - y - (yc - x)*img->width - 1] = boundary_color;
 }
 
-static PPMImage* printCircles(unsigned int width, unsigned int height, int xc, int yc, unsigned int r, unsigned int gap, unsigned int frequency) {
-	PPMImage *img = createPPMImage(width,height);
+void printCircles(int xc, int yc, unsigned int r, unsigned int gap, unsigned int frequency, PPMImage *img, PPMPixel boundary_color) {
 	while(frequency--) {
 		int x=0, y=r;
 		int d=3-2*r;
-		drawCircle(xc,yc,x,y,img);
+		drawCircle(xc,yc,x,y,img,boundary_color);
 		while(y>=x) {			//Bresenham'ýn çember çizme algoritmasý
 			x++;
 			if(d>0) {
@@ -281,19 +291,14 @@ static PPMImage* printCircles(unsigned int width, unsigned int height, int xc, i
 			}
 			else
 				d+=4*x+6;
-			drawCircle(xc,yc,x,y,img);
+			drawCircle(xc,yc,x,y,img,boundary_color);
 		}
 		r-=gap;
 	}
-	unsigned int i;
-	for(i=0;i<width*height;i++)
-		if(!(img->data[i].red==255 && img->data[i].green==0 && img->data[i].blue==0))
-			img->data[i] = (PPMPixel){0,0,0};		//arka plan rengi siyah
-	return img;
 }
 
 static PPMImage* printRoughHeart(unsigned int size) {				//kulakçýk büyüklüðünü (auricle size) parametre olarak alýr
-	PPMImage *img = size%4==1 || size%4==2 ? createPPMImage(2*size-1,floor(5*size/4.0)+1) : createPPMImage(2*size,floor(5*size/4.0)+2);
+	PPMImage *img = size%4==1 || size%4==2 ? createPPMImage(2*size-1, floor(5*size/4.0)+1, BLACK) : createPPMImage(2*size, floor(5*size/4.0)+2, BLACK);
 	unsigned int i,j,counter=0;
  	for(i=size/2;i<=size;i+=2) {
 		for(j=1;j<size-i;j+=2)
@@ -318,22 +323,19 @@ static PPMImage* printRoughHeart(unsigned int size) {				//kulakçýk büyüklüðünü 
 	return img;
 }
 
-void drawLine(int x1, int y1, int x2, int y2, PPMImage *img) {
+void drawLine(int x1, int y1, int x2, int y2, PPMImage *img, PPMPixel line_color) {
 	unsigned int center_index = (img->width*img->height)%4==0 ? img->width*(img->height-1)/2: img->width*img->height/2;
 	int dx=x2-x1, dy=y2-y1;
 	unsigned int steps = abs(dx)>abs(dy) ? abs(dx) : abs(dy);
 	float Xinc = dx/(float)steps, Yinc = dy/(float)steps, x=x1, y=y1;
 	unsigned int i;
 	for(i=0; i<=steps; i++, x+=Xinc, y+=Yinc)
-		img->data[center_index + (int)x - img->width*(int)y - 1] = (PPMPixel){255,0,0};
-	for(i=0;i<img->width*img->height;i++)
-		if(!(img->data[i].red==255 && img->data[i].green==0 && img->data[i].blue==0))
-			img->data[i] = (PPMPixel){0,0,0};
+		img->data[center_index + (int)x - img->width*(int)y - 1] = line_color;
 }
 
 void drawKochCurve(Point p1, Point p2, unsigned int iteration, PPMImage *img) {
 	Point p3,p4,p5;
-	long double theta = M_PI/3;
+	double theta = M_PI/3;
 	p3 = (Point){(2*p1.x+p2.x)/3, (2*p1.y+p2.y)/3};
 	p4 = (Point){(2*p2.x+p1.x)/3, (2*p2.y+p1.y)/3};
 	p5 = (Point){p3.x + (p4.x-p3.x)*cos(theta) + (p4.y-p3.y)*sin(theta), p3.y - (p4.x-p3.x)*sin(theta) + (p4.y-p3.y)*cos(theta)};
@@ -344,10 +346,11 @@ void drawKochCurve(Point p1, Point p2, unsigned int iteration, PPMImage *img) {
 		drawKochCurve(p4,p2,iteration-1,img);
 	}
 	else {
-		drawLine(p1.x,p1.y,p3.x,p3.y,img);
-		drawLine(p3.x,p3.y,p5.x,p5.y,img);
-		drawLine(p5.x,p5.y,p4.x,p4.y,img);
-		drawLine(p4.x,p4.y,p2.x,p2.y,img);
+		PPMPixel RED = (PPMPixel){255,0,0};
+		drawLine(p1.x,p1.y,p3.x,p3.y,img,RED);
+		drawLine(p3.x,p3.y,p5.x,p5.y,img,RED);
+		drawLine(p5.x,p5.y,p4.x,p4.y,img,RED);
+		drawLine(p4.x,p4.y,p2.x,p2.y,img,RED);
 	}
 }
 
@@ -355,6 +358,47 @@ void printKochCurve(int x1, int y1, int x2, int y2, unsigned int iteration, PPMI
 	Point p1 = (Point){x1,y1};
 	Point p2 = (Point){x2,y2};
 	drawKochCurve(p1,p2,iteration,img);
+}
+
+void fillRegion(int x, int y, PPMPixel fill_color, PPMPixel region_color, PPMImage *img) {
+	unsigned int center_index = (img->width*img->height)%4==0 ? img->width*(img->height-1)/2: img->width*img->height/2;
+	if( (img->data[center_index + x - img->width*y - 1].red==fill_color.red  &&  img->data[center_index + x - img->width*y - 1].green==fill_color.green  &&  
+		img->data[center_index + x - img->width*y - 1].blue==fill_color.blue)   ||   !(img->data[center_index + x - img->width*y - 1].red==region_color.red  &&
+		img->data[center_index + x - img->width*y - 1].green==region_color.green  &&  img->data[center_index + x - img->width*y - 1].blue==region_color.blue) )
+		return;
+	img->data[center_index + x - img->width*y - 1] = fill_color;
+	fillRegion(x-1,y,fill_color,region_color,img);
+	fillRegion(x+1,y,fill_color,region_color,img);
+	fillRegion(x,y-1,fill_color,region_color,img);
+	fillRegion(x,y+1,fill_color,region_color,img);
+}
+
+void drawTriangles(float x, float y, float h, PPMImage *img) {
+	float delta;
+	for(delta=0;delta>-5;delta--) {
+		drawLine(x-(h+delta)/sqrt(3), y-(h+delta)/3, x+(h+delta)/sqrt(3), y-(h+delta)/3, img, RED);
+		drawLine(x-(h+delta)/sqrt(3), y-(h+delta)/3, x, y+2*(h+delta)/3, img, RED);
+		drawLine(x, y+2*(h+delta)/3, x+(h+delta)/sqrt(3), y-(h+delta)/3, img, RED);
+	}
+}
+
+void drawTrianglesv2(float x, float y, float h, PPMImage *img) {
+	float delta;
+	for(delta=0;delta>-5;delta--) {
+		drawLine(x-(h+delta)/sqrt(3), y+(h+delta)/3, x+(h+delta)/sqrt(3), y+(h+delta)/3, img, RED);
+		drawLine(x-(h+delta)/sqrt(3), y+(h+delta)/3, x, y-2*(h+delta)/3, img, RED);
+		drawLine(x, y-2*(h+delta)/3, x+(h+delta)/sqrt(3), y+(h+delta)/3, img, RED);
+	}
+}
+
+void printSierpinski(float x, float y, float h, PPMImage *img) {
+	if(h<5)
+		return;
+	if(-(signed int)img->width/2<x && -(signed int)img->width/2<y && x<img->width/2 && y<img->height/2)
+		drawTriangles(x,y,h,img);
+	printSierpinski(x, y-2*h/3, h/2, img);
+	printSierpinski(x-h/sqrt(3), y+h/3, h/2, img);
+	printSierpinski(x+h/sqrt(3), y+h/3, h/2, img);
 }
 
 #endif
