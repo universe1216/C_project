@@ -24,49 +24,49 @@ static PPMImage* readPPM(const char *filename) {
 	PPMImage *img;
 	FILE *fp;
 	int rgb_comp_color;
-	fp=fopen(filename,"rb");						//okumak için ppm dosyasý aç
+	fp=fopen(filename,"rb");
 	if(!fp) {
 		fprintf(stderr,"Unable to open file '%s'.\n",filename);
 		exit(1);
 	}
-	if(!fgets(buff,sizeof(buff),fp)) {				//resim dosyasýnýn formatýný oku
+	if(!fgets(buff,sizeof(buff),fp)) {
 		perror(filename);
 		exit(1);
 	}
-	if(buff[0]!='P' || buff[1]!='6') {				//resim dosyasýnýn formatýný kontrol et
+	if(buff[0]!='P' || buff[1]!='6') {
 		fprintf(stderr,"Invalid image format (must be 'P6').\n");
 		exit(1);
 	}
-	img = (PPMImage*) malloc(sizeof(PPMImage));		//resim için dinamik bellek tahsisi yap
+	img = (PPMImage*) malloc(sizeof(PPMImage));
 	if(!img) {
 		fprintf(stderr,"Unable to allocate memory.\n");
 		exit(1);
 	}
 	char c=getc(fp);
-	while(c=='#') {									//yorumlarý kontrol et
+	while(c=='#') {
 		while(getc(fp)!='\n');
 		c=getc(fp);
 	}
 	ungetc(c,fp);
-	if(fscanf(fp,"%d %d",&img->width,&img->height)!=2) {			//dosya boyutlarýný oku
+	if(fscanf(fp,"%d %d",&img->width,&img->height)!=2) {
 		fprintf(stderr,"Invalid image size (error loading '%s').\n",filename);
 		exit(1);
 	}
-	if(fscanf(fp,"%d",&rgb_comp_color)!=1) {						//RGB derinliðini oku
+	if(fscanf(fp,"%d",&rgb_comp_color)!=1) {
 		fprintf(stderr,"Invalid RGB component (error loading '%s').\n",filename);
 		exit(1);
 	}
-	if(rgb_comp_color!=RGB_COMPONENT_COLOR) {						//RGB derinliðini kontrol et
+	if(rgb_comp_color!=RGB_COMPONENT_COLOR) {
 		fprintf(stderr,"'%s' does not have 8-bit components.\n",filename);
 		exit(1);
 	}
 	while(fgetc(fp)!='\n');
-	img->data = (PPMPixel*) malloc(img->width * img->height * sizeof(PPMPixel));	//pixel data için dinamik bellek tahsisi yap
+	img->data = (PPMPixel*) malloc(img->width * img->height * sizeof(PPMPixel));
 	if(!img) {
 		fprintf(stderr,"Unable to allocate memory.\n");
 		exit(1);
 	}
-	if(fread(img->data, 3*img->width, img->height, fp) != img->height) {			//pixel datayý oku
+	if(fread(img->data, 3*img->width, img->height, fp) != img->height) {
 		fprintf(stderr,"Error loading image '%s'.\n",filename);
 		exit(1);
 	}
@@ -80,16 +80,16 @@ void writePPM(const char *filename, PPMImage *img) {
 		exit(1);
 	}
 	FILE *fp;
-	fp=fopen(filename,"wb");	//çýktý için dosya oluþtur
+	fp=fopen(filename,"wb");
 	if(!fp) {
 		fprintf(stderr,"Unable to open file '%s'.\n",filename);
 		exit(1);
 	}
-	fprintf(fp,"P6\n");										//resim formatý
-	fprintf(fp,"# Created by %s\n",CREATOR);				//yorumlar
-	fprintf(fp,"%d %d\n",img->width,img->height);			//resim boyutlarý
-	fprintf(fp,"%d\n",RGB_COMPONENT_COLOR);					//RGB derinliði
-	fwrite(img->data, 3*img->width, img->height, fp);		//pixel data
+	fprintf(fp,"P6\n");
+	fprintf(fp,"# Created by %s\n",CREATOR);
+	fprintf(fp,"%d %d\n",img->width,img->height);
+	fprintf(fp,"%d\n",RGB_COMPONENT_COLOR);
+	fwrite(img->data, 3*img->width, img->height, fp);
 	fclose(fp);
 }
 
@@ -115,7 +115,7 @@ static PPMImage* createPPMImage(unsigned int width, unsigned int height, PPMPixe
 void invertColorPPM(PPMImage *img) {
 	unsigned int i;
 	if(img)
-		for(i=0;i<img->width*img->height;i++) {			//girdinin her bir pixel'inin RGB deðerlerini karþýtýyla deðiþtir
+		for(i=0;i<img->width*img->height;i++) {
 			img->data[i].red = RGB_COMPONENT_COLOR - img->data[i].red;
 			img->data[i].green = RGB_COMPONENT_COLOR - img->data[i].green;
 			img->data[i].blue = RGB_COMPONENT_COLOR - img->data[i].blue;
@@ -125,7 +125,7 @@ void invertColorPPM(PPMImage *img) {
 void grayscalePPM(PPMImage *img) {
 	unsigned int i;
 	if(img)
-		for(i=0;i<img->width*img->height;i++) {			//girdinin her bir pixel'inin RGB deðerlerinin ortalamasýný hesaplayýp bu ortalamayý o pixel'in R,G ve B'sine ata
+		for(i=0;i<img->width*img->height;i++) {
 			double average = (img->data[i].red + img->data[i].green + img->data[i].blue) / 3.0;
 			img->data[i].red = img->data[i].green = img->data[i].blue = average;
 		}
@@ -134,7 +134,7 @@ void grayscalePPM(PPMImage *img) {
 void sepiaPPM(PPMImage *img) {
 	unsigned int i;
 	if(img)
-		for(i=0;i<img->width*img->height;i++) {			//girdinin her bir pixel'inin R,G ve B deðerleri için ayrý aðýrlýklý ortalamalar hesaplayýp bu ortalamalarý o pixel'in sýrayla R,G ve B'sine ata
+		for(i=0;i<img->width*img->height;i++) {
 			double sepia_red = 0.393*img->data[i].red + 0.769*img->data[i].green + 0.189*img->data[i].blue;
 			double sepia_green = 0.349*img->data[i].red + 0.686*img->data[i].green + 0.168*img->data[i].blue;
 			double sepia_blue = 0.272*img->data[i].red + 0.534*img->data[i].green + 0.131*img->data[i].blue;
@@ -145,17 +145,17 @@ void sepiaPPM(PPMImage *img) {
 }
 
 void rotate(PPMImage *img, short iteration) {
-	unsigned short real_iteration = iteration>0 ? iteration%4 : (4 - (-iteration)%4) % 4, k;	//+: clockwise, -: counterclockwise
+	unsigned short real_iteration = iteration>0 ? iteration%4 : (4 - (-iteration)%4) % 4, k;
 	if(img)
 		for(k=0;k<real_iteration;k++) {
 			PPMImage *buffer = createPPMImage(img->width,img->height,BLACK);
 			unsigned int i,j;
 			for(i=0;i<img->height;i++)
 				for(j=0;j<img->width;j++)
-					buffer->data[img->height*(j+1) - i - 1] = img->data[img->width*i + j];		//img resmindeki pixel'leri buffer resmindeki pixel'lere kopyala
-			memcpy(img->data, buffer->data, img->width * img->height * sizeof(PPMPixel));		//buffer pixel data'yý img pixel data'ya kopyala
+					buffer->data[img->height*(j+1) - i - 1] = img->data[img->width*i + j];
+			memcpy(img->data, buffer->data, img->width * img->height * sizeof(PPMPixel));
 			free(buffer);
-			unsigned int temp = img->height;		//boyutlarý swap'la
+			unsigned int temp = img->height;
 			img->height = img->width;
 			img->width = temp;
 		}
@@ -196,34 +196,34 @@ static PPMImage* printRainbow(unsigned int width, unsigned int height, unsigned 
 	for(k=0;k<iteration;k++) {
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){255,0,0};			//red
+				img->data[counter++] = (PPMPixel){255,0,0};
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){255,127,0};		//orange
+				img->data[counter++] = (PPMPixel){255,127,0};
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){255,255,0};		//yellow
+				img->data[counter++] = (PPMPixel){255,255,0};
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){0,255,0};			//green
+				img->data[counter++] = (PPMPixel){0,255,0};
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){0,0,255};			//blue
+				img->data[counter++] = (PPMPixel){0,0,255};
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){75,0,130};		//indigo
+				img->data[counter++] = (PPMPixel){75,0,130};
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){148,0,211};		//violet
+				img->data[counter++] = (PPMPixel){148,0,211};
 	}
 	return img;
 }
 
-static PPMImage* print8bitMandelbrotSet(unsigned int width, unsigned int height) {		//algoritma Uygulama 13'ten alýntý
+static PPMImage* print8bitMandelbrotSet(unsigned int width, unsigned int height) {
 	PPMImage *img = createPPMImage(width,height,BLACK);
 	int index=0,counter=0;
 	float i,j,r,x,y;
-	PPMPixel pixel_Array[16] = { {0,0,0}, {175,0,0}, {255,0,0}, {255,127,0},				//black, ROYGBIV
+	PPMPixel pixel_Array[16] = { {0,0,0}, {175,0,0}, {255,0,0}, {255,127,0},
 								 {255,255,0}, {127,255,0}, {0,255,0}, {0,255,127},
 								 {0,255,255}, {0,127,255}, {0,0,255}, {127,0,255},
 								 {255,0,255}, {255,0,127}, {255,0,255}, {255,0,127} };
@@ -259,7 +259,7 @@ static PPMImage* printEpicMandelbrotSet(unsigned int width, unsigned int height)
 				Zx2=Zx*Zx;
 				Zy2=Zy*Zy;
 			}
-			img->data[counter].red = img->data[counter].green = img->data[counter].blue = Iteration==IterationMax ? 0 : 255;	//(0,0,0) [black] : (255,255,255) [white]
+			img->data[counter].red = img->data[counter].green = img->data[counter].blue = Iteration==IterationMax ? 0 : 255;
 			counter++;
 		}
 	}
@@ -283,7 +283,7 @@ void printCircles(int xc, int yc, unsigned int r, unsigned int gap, unsigned int
 		int x=0, y=r;
 		int d=3-2*r;
 		drawCircle(xc,yc,x,y,img,boundary_color);
-		while(y>=x) {			//Bresenham'ýn çember çizme algoritmasý
+		while(y>=x) {
 			x++;
 			if(d>0) {
 				y--;
@@ -297,7 +297,7 @@ void printCircles(int xc, int yc, unsigned int r, unsigned int gap, unsigned int
 	}
 }
 
-static PPMImage* printRoughHeart(unsigned int size) {				//kulakçýk büyüklüðünü (auricle size) parametre olarak alýr
+static PPMImage* printRoughHeart(unsigned int size) {
 	PPMImage *img = size%4==1 || size%4==2 ? createPPMImage(2*size-1, floor(5*size/4.0)+1, BLACK) : createPPMImage(2*size, floor(5*size/4.0)+2, BLACK);
 	unsigned int i,j,counter=0;
  	for(i=size/2;i<=size;i+=2) {
