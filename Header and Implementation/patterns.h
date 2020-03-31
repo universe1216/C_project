@@ -39,25 +39,25 @@ static PPMImage* printRainbow(unsigned int width, unsigned int height, unsigned 
 	for(k=0;k<iteration;k++) {
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){255,0,0};
+				img->data[counter++] = RED;
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){255,127,0};
+				img->data[counter++] = ORANGE;
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){255,255,0};
+				img->data[counter++] = YELLOW;
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){0,255,0};
+				img->data[counter++] = GREEN;
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){0,0,255};
+				img->data[counter++] = BLUE;
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){75,0,130};
+				img->data[counter++] = INDIGO;
 		for(i=0;i<height;i++)
 			for(j=0;j<width;j++)
-				img->data[counter++] = (PPMPixel){148,0,211};
+				img->data[counter++] = DARK_VIOLET;
 	}
 	return img;
 }
@@ -98,23 +98,23 @@ static PPMImage* printRoughHeart(unsigned int size) {
 	unsigned int i,j,counter=0;
  	for(i=size/2;i<=size;i+=2) {
 		for(j=1;j<size-i;j+=2)
-			img->data[counter++] = (PPMPixel){0,0,0};
+			img->data[counter++] = BLACK;
 		for(j=1;j<=i;j++)
-			img->data[counter++] = (PPMPixel){255,0,0};
+			img->data[counter++] = RED;
 		for(j=1;j<=size-i;j++)
-			img->data[counter++] = (PPMPixel){0,0,0};
+			img->data[counter++] = BLACK;
 		for(j=1;j<=i;j++)
-			img->data[counter++] = (PPMPixel){255,0,0};
+			img->data[counter++] = RED;
 		for(j=1;j<size-i;j+=2)
-			img->data[counter++] = (PPMPixel){0,0,0};
+			img->data[counter++] = BLACK;
 	}
 	for(i=size;i>=1;i--) {
 		for(j=i;j<size;j++)
-			img->data[counter++] = (PPMPixel){0,0,0};
+			img->data[counter++] = BLACK;
 		for(j=1;j<=2*i-1;j++)
-			img->data[counter++] = (PPMPixel){255,0,0};
+			img->data[counter++] = RED;
 		for(j = size%4==1 || size%4==2 ? i : i-1;j<size;j++)
-			img->data[counter++] = (PPMPixel){0,0,0};
+			img->data[counter++] = BLACK;
 	}
 	return img;
 }

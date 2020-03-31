@@ -118,11 +118,11 @@ int main() {
 
 
 
-	PPMImage *line=createPPMImage(250,250,BLACK);
+	PPMImage *line=createPPMImage(250,250,WHITE);
 	drawLine(0,0,50,100,line,RED);
 	writePPM("./Examples/Patterns/Line/line_1.ppm",line);
 
-	line=createPPMImage(500,500,WHITE);
+	line=createPPMImage(500,500,BLACK);
 	drawLine(0,0,100,20,line,RED);
 	drawLine(0,0,100,-100,line,RED);
 	drawLine(0,-100,-100,0,line,RED);
@@ -141,19 +141,19 @@ int main() {
 
 
 	PPMImage *Koch=createPPMImage(1000,1000,BLACK);
-	printKochCurve(-450,-450,450,450,3,Koch);
+	printKochCurve(-450,-450,450,450,3,Koch,RED);
 	writePPM("./Examples/Fractals/Koch Curve/Koch_curve.ppm",Koch);
 
 	Koch=createPPMImage(1000,1000,BLACK);
-	printKochCurve(-450,400,-350,450,3,Koch);
-	printKochCurve(-450,0,0,450,4,Koch);
-	printKochCurve(-450,-450,450,450,7,Koch);
+	printKochCurve(-450,400,-350,450,3,Koch,RED);
+	printKochCurve(-450,0,0,450,4,Koch,GREEN);
+	printKochCurve(-450,-450,450,450,7,Koch,BLUE);
 	writePPM("./Examples/Fractals/Koch Curve/3xKoch_curve.ppm",Koch);
 
 	Koch=createPPMImage(1000,1000,BLACK);
-	printKochCurve(-450,-450,450,450,5,Koch);
+	printKochCurve(-450,-450,450,450,5,Koch,BLUE);
 	rotate(Koch,2);
-	printKochCurve(-450,-450,450,450,5,Koch);
+	printKochCurve(-450,-450,450,450,5,Koch,BLUE);
 	writePPM("./Examples/Fractals/Koch Curve/symmetrical_Koch_curve.ppm",Koch);
 
 	free(Koch);
@@ -161,8 +161,13 @@ int main() {
 
 
 	PPMImage *filledShape=createPPMImage(300,300,WHITE);
-	drawLine(-100,-100,0,50,filledShape,RED);
-	drawLine(100,-100,0,50,filledShape,GREEN);
+	printCircles(0,0,100,0,1,filledShape,RED);
+	fillRegion(0,0,RED,WHITE,filledShape);
+	writePPM("./Examples/Patterns/Filled Shapes/red_disk.ppm",filledShape);
+
+	filledShape=createPPMImage(300,300,WHITE);
+	drawLine(-100,-100,0,75,filledShape,RED);
+	drawLine(100,-100,0,75,filledShape,GREEN);
 	drawLine(-100,-100,100,-100,filledShape,YELLOW);
 	fillRegion(0,0,BLUE,WHITE,filledShape);
 	writePPM("./Examples/Patterns/Filled Shapes/blue_triangle.ppm",filledShape);
@@ -181,21 +186,6 @@ int main() {
 	fillRegion(0,0,YELLOW,WHITE,filledShape);
 	writePPM("./Examples/Patterns/Filled Shapes/yellow_star.ppm",filledShape);
 
-	filledShape=createPPMImage(500,500,BLACK);
-	printCircles(0,0,200,0,1,filledShape,RED);		//200 yarýçaplý büyük çember
-	printCircles(0,100,100,0,1,filledShape,RED);	//üstteki 100 yarýçaplý orta çember
-	printCircles(0,-100,100,0,1,filledShape,RED);	//alttaki 100 yarýçaplý orta çember
-	fillRegion(-100,0,WHITE,BLACK,filledShape);		//sol tarafýn içini beyaza boya
-	fillRegion(0,-100,WHITE,BLACK,filledShape);		//alt orta çemberin içini beyaza boya
-	fillRegion(100,0,RED,BLACK,filledShape);		//sað tarafýn içini kýrmýzýya boya
-	fillRegion(0,100,RED,BLACK,filledShape);		//üst orta çemberin içini kýrmýzýya boya
-	printCircles(0,100,30,0,1,filledShape,WHITE);	//üstteki 30 yarýçaplý küçük çember
-	fillRegion(0,100,WHITE,RED,filledShape);		//üst küçük çemberin içini beyaza boya
-	printCircles(0,-100,30,0,1,filledShape,RED);	//alt 30 yarýçaplý küçük çember
-	fillRegion(0,-100,RED,WHITE,filledShape);		//alt küçük çemberin içini kýrmýzýya boya
-	printCircles(0,-100,100,0,1,filledShape,WHITE);	//alt orta çemberin kýrmýzý sýnýrlarý beyaza boya
-	writePPM("./Examples/Patterns/Filled Shapes/red_and_white_yin_yang.ppm",filledShape);
-
 	free(filledShape);
 
 
@@ -210,7 +200,7 @@ int main() {
 
 
 	PPMImage *mix=createPPMImage(750,750,BLACK);
-	printKochCurve(-350,-350,350,350,5,mix);
+	printKochCurve(-350,-350,350,350,5,mix,RED);
 	rotate(mix,2);
 	printCircles(0,0,300,15,20,mix,BLUE);
 	writePPM("./Examples/Fractals/Koch Curve/Koch curve and 15 circles.ppm",mix);
@@ -232,6 +222,55 @@ int main() {
 	writePPM("./Examples/Fractals/Julia Set/Julia_set_z20.ppm",Julia);
 
 	free(Julia);
+
+
+
+	PPMImage *yinyang=createPPMImage(500,500,BLACK);
+	printYinYangFractal(0,0,200,0.20,1,RED,WHITE,yinyang);
+	writePPM("./Examples/Fractals/Yin Yang/yin_yang_r200_i1.ppm",yinyang);
+
+	yinyang=createPPMImage(600,600,GREEN);
+	printYinYangFractal(0,0,250,0.33,3,BLACK,WHITE,yinyang);
+	writePPM("./Examples/Fractals/Yin Yang/yin_yang_r250_i3.ppm",yinyang);
+
+	yinyang=createPPMImage(1200,1200,YELLOW);
+	printYinYangFractal(0,0,500,0.33,4,BLACK,WHITE,yinyang);
+	writePPM("./Examples/Fractals/Yin Yang/yin_yang_r500_i4.ppm",yinyang);
+
+	yinyang=createPPMImage(1300,1300,RED);
+	printYinYangFractal(0,0,560,0.40,5,BLACK,WHITE,yinyang);
+	writePPM("./Examples/Fractals/Yin Yang/yin_yang_r560_i5.ppm",yinyang);
+
+	free(yinyang);
+
+
+
+	PPMImage *circleFractal=createPPMImage(1080,720,WHITE);
+	printCircleFractal_xAxis(0,0,300,circleFractal,BLACK);
+	writePPM("./Examples/Fractals/Circle/circle_fractal_r300_x_axis.ppm",circleFractal);
+
+	circleFractal=createPPMImage(1920,1080,BLACK);
+	printCircleFractal_xyPlane(0,0,500,circleFractal,RED);
+	writePPM("./Examples/Fractals/Circle/circle_fractal_r500_xy_plane.ppm",circleFractal);
+
+	free(circleFractal);
+
+
+
+	PPMImage *tree=tree=createPPMImage(150,150,WHITE);
+	printTree(0,-60,-90,4,tree,BLACK);
+	writePPM("./Examples/Fractals/Tree/tree_i4.ppm",tree);
+
+	tree=createPPMImage(600,600,BLACK);
+	printTree(0,-290,-90,9,tree,WHITE);
+	writePPM("./Examples/Fractals/Tree/tree_i9.ppm",tree);
+
+	tree=createPPMImage(1300,1000,BLACK);
+	printTree(0,-490,-90,13,tree,YELLOW);
+	writePPM("./Examples/Fractals/Tree/tree_i13.ppm",tree);
+
+	free(tree);
+
 
 
 	fprintf(stdout,"Image manipulation complete.\nProcess terminated successfully...");
