@@ -83,19 +83,19 @@ int main() {
 
 
 	PPMImage *circle=createPPMImage(500,500,BLACK);
-	printCircles(0,0,100,0,1,circle,RED);
+	printMultipleCircles(0,0,100,0,1,circle,RED);
 	writePPM("./Examples/Patterns/Circle/circle_500x500_r100.ppm",circle);
 
 	circle=createPPMImage(250,250,BLACK);
-	printCircles(-74,74,50,0,1,circle,RED);
+	printMultipleCircles(-74,74,50,0,1,circle,RED);
 	writePPM("./Examples/Patterns/Circle/circle_250x250_r50.ppm",circle);
 
 	circle=createPPMImage(500,500,BLACK);
-	printCircles(0,0,100,5,20,circle,RED);
+	printMultipleCircles(0,0,100,5,20,circle,RED);
 	writePPM("./Examples/Patterns/Circle/20xcircles_500x500_r100.ppm",circle);
 
 	circle=createPPMImage(500,500,BLACK);
-	printCircles(0,0,200,2,100,circle,RED);
+	printMultipleCircles(0,0,200,2,100,circle,RED);
 	writePPM("./Examples/Patterns/Circle/100xcircles_500x500_r200.ppm",circle);
 
 	free(circle);
@@ -161,7 +161,7 @@ int main() {
 
 
 	PPMImage *filledShape=createPPMImage(300,300,WHITE);
-	printCircles(0,0,100,0,1,filledShape,RED);
+	printMultipleCircles(0,0,100,0,1,filledShape,RED);
 	fillRegion(0,0,RED,WHITE,filledShape);
 	writePPM("./Examples/Patterns/Filled Shapes/red_disk.ppm",filledShape);
 
@@ -191,21 +191,11 @@ int main() {
 
 
 	PPMImage *Sierpinski=createPPMImage(1200,1200,BLACK);
-	drawTrianglesv2(0,100,900,Sierpinski);
-	printSierpinski(0,100,450,Sierpinski);
+	drawTrianglesv2(0,100,900,Sierpinski,RED);
+	printSierpinski(0,100,450,Sierpinski,RED);
 	writePPM("./Examples/Fractals/Sierpinski Triangle/Sierpinski_triangle.ppm",Sierpinski);
 
 	free(Sierpinski);
-
-
-
-	PPMImage *mix=createPPMImage(750,750,BLACK);
-	printKochCurve(-350,-350,350,350,5,mix,RED);
-	rotate(mix,2);
-	printCircles(0,0,300,15,20,mix,BLUE);
-	writePPM("./Examples/Fractals/Koch Curve/Koch curve and 15 circles.ppm",mix);
-
-	free(mix);
 
 
 
@@ -258,18 +248,52 @@ int main() {
 
 
 	PPMImage *tree=tree=createPPMImage(150,150,WHITE);
-	printTree(0,-60,-90,4,tree,BLACK);
-	writePPM("./Examples/Fractals/Tree/tree_i4.ppm",tree);
+	printTree(0,-60,-90,20,4,tree,BLACK);
+	writePPM("./Examples/Fractals/Tree/tree_d20_i4.ppm",tree);
 
 	tree=createPPMImage(600,600,BLACK);
-	printTree(0,-290,-90,9,tree,WHITE);
-	writePPM("./Examples/Fractals/Tree/tree_i9.ppm",tree);
+	printTree(0,-290,-90,20,9,tree,WHITE);
+	writePPM("./Examples/Fractals/Tree/tree_d20_i9.ppm",tree);
 
 	tree=createPPMImage(1300,1000,BLACK);
-	printTree(0,-490,-90,13,tree,YELLOW);
-	writePPM("./Examples/Fractals/Tree/tree_i13.ppm",tree);
+	printTree(0,-490,-90,20,13,tree,YELLOW);
+	writePPM("./Examples/Fractals/Tree/tree_d20_i13.ppm",tree);
+
+	tree=createPPMImage(200,150,BLACK);
+	printTree(0,-60,-90,90,6,tree,YELLOW);
+	writePPM("./Examples/Fractals/Tree/tree_d90_i6.ppm",tree);
+
+	tree=createPPMImage(300,300,BLACK);
+	printTree(50,-50,-60,-135,9,tree,YELLOW);
+	writePPM("./Examples/Fractals/Tree/kite.ppm",tree);
 
 	free(tree);
+
+
+
+	PPMImage *Cantor=createPPMImage(600,200,BLACK);
+	printCantor(-250,50,500,Cantor,RED);
+	writePPM("./Examples/Fractals/Cantor Set/Cantor_set.ppm",Cantor);
+
+	free(Cantor);
+
+
+
+	PPMImage *mix=createPPMImage(750,750,BLACK);
+	printKochCurve(-350,-350,350,350,5,mix,RED);
+	rotate(mix,2);
+	printMultipleCircles(0,0,300,15,20,mix,BLUE);
+	writePPM("./Examples/Fractals/Mix/Koch curve and 15 circles.ppm",mix);
+
+	mix=printEpicMandelbrotSet(1800,1800);
+	printKochCurve(-850,-850,-250,-250,5,mix,BLUE);
+	printMultipleCircles(-550,550,290,8,50,mix,PURPLE);
+	drawTrianglesv2(550,-550,400,mix,CYAN);
+	printSierpinski(550,-550,200,mix,GREEN);
+	printTree(550,300,-90,10,10,mix,YELLOW);
+	writePPM("./Examples/Fractals/Mix/all_in_1.ppm",mix);
+
+	free(mix);
 
 
 

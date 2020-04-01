@@ -77,22 +77,22 @@ void writePPM(const char *filename, PPMImage *img) {
 	fclose(fp);
 }
 
-static PPMImage* createPPMImage(unsigned int width, unsigned int height, PPMPixel color) {
+static PPMImage* createPPMImage(unsigned int image_width, unsigned int image_height, PPMPixel background_color) {
 	PPMImage *img = (PPMImage*) malloc(sizeof(PPMImage));
 	if(!img) {
 		fprintf(stderr,"Unable to allocate memory.\n");
 		exit(1);
 	}
-	img->width=width;
-	img->height=height;
+	img->width=image_width;
+	img->height=image_height;
 	img->data = (PPMPixel*) malloc(img->width * img->height * sizeof(PPMPixel));
 	if(!img) {
 		fprintf(stderr,"Unable to allocate memory.\n");
 		exit(1);
 	}
 	unsigned int i;
-	for(i=0;i<width*height;i++)
-		img->data[i] = color;
+	for(i=0;i<img->width*img->height;i++)
+		img->data[i] = background_color;
 	return img;
 }
 
