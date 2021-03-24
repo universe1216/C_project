@@ -70,6 +70,17 @@ int main() {
 	
 	img = drawJulia(1920, 1080, 3);
 	writePPM("./Examples/Fractals/Julia_set_z3.ppm", img);
+	deletePPMImage(img);
+	
+	img = createPPMImage(800, 800, RED);
+	drawBarnsleyFern(1000000, 75, img);
+	writePPM("./Examples/Fractals/fern_i1000000.ppm", img);
+	deletePPMImage(img);
+	
+	img = createPPMImage(500, 500, YELLOW);
+	drawYinYangFractal(0, 0, 200, 0.4, 4, BLACK, WHITE, img);
+	writePPM("./Examples/Fractals/yinyang_r200_i4.ppm", img);
+	deletePPMImage(img);
 
 
 	fprintf(stdout, "Image manipulation complete.\nProcess terminated successfully...");
