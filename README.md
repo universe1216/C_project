@@ -13,14 +13,14 @@ test
 ## Examples
 
 <p float="left">
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_negative.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_grayscale.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_sepia.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_brightness_50.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_contrast_50.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_hue_135.jpg" width="100" />
-  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_blurred_3.jpg" width="100" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_negative.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_grayscale.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_sepia.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_brightness_50.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_contrast_50.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_hue_135.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_blurred_3.jpg" width="250" />
 </p>
 
 ## Author
