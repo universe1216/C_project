@@ -23,6 +23,15 @@ test
   <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_blurred_3.jpg" width="250" />
 </p>
 
+<p float="left">
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/fern_i1000000.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/Julia_set_z3.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/Koch_curve_and_15_circles.jpg" width="250" />
+  <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/yinyang_r200_i4.jpg" width="250" />
+</p>
+
+
+
 ## Author
 
 👤 **Aras Güngöre**
