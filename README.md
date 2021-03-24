@@ -20,3 +20,10 @@ test
 <p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_contrast_50.jpg></p>
 <p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_hue_135.jpg></p>
 <p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_blurred_3.jpg></p>
+
+## Author
+
+👤 **Aras Güngöre**
+
+* Github: [@arasgungore](https://github.com/arasgungore)
+* LinkedIn: [@arasgungore](https://www.linkedin.com/in/arasgungore)
