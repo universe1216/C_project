@@ -42,8 +42,8 @@ void drawMultipleCircles(int xc, int yc, unsigned int radius, unsigned int gap, 
 }
 
 // draws a line on the given image where:
-// (x1, y1): x and y coordinates of the starting point of the line
-// (x2, y2): x and y coordinates of the end point of the line
+// (x1, y1): x and y coordinates of the starting point of line
+// (x2, y2): x and y coordinates of the end point of line
 // color: color of the line
 void drawLine(int x1, int y1, int x2, int y2, PPMImage *img, PPMPixel color) {
 	int dx = x2 - x1, dy = y2 - y1;

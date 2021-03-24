@@ -64,7 +64,11 @@ void drawKochCurveUtil(Point p1, Point p2, unsigned int iteration, PPMImage *img
 	}
 }
 
-// draws the Koch curve on the given image, the curve becomes more and more detailed as the "iteration" number increases
+// draws the Koch curve on the given image where:
+// (x1, y1): x and y coordinates of the starting point of Koch curve
+// (x2, y2): x and y coordinates of the end point of Koch curve
+// iteration: number of iterations (the curve becomes more and more detailed as the "iteration" number increases)
+// color: color of the Koch curve
 void drawKochCurve(int x1, int y1, int x2, int y2, unsigned int iteration, PPMImage *img, PPMPixel color) {
 	Point p1 = (Point){x1, y1};
 	Point p2 = (Point){x2, y2};
