@@ -44,7 +44,7 @@ PPMImage* drawMandelbrotSet(unsigned int image_width, unsigned int image_height)
 	return img;
 }
 
-// a recursive utility function of "drawKochCurve", which is called over and over again to complete the curve
+// a recursive utility function of "drawKochCurve", which is called over and over again to complete the Koch curve
 void drawKochCurveUtil(Point p1, Point p2, unsigned int iteration, PPMImage *img, PPMPixel color) {
 	const double theta = M_PI/3;
 	Point p3 = (Point){(2*p1.x + p2.x)/3, (2*p1.y + p2.y)/3};
@@ -102,7 +102,7 @@ void drawSierpinski(double x, double y, double h, PPMImage *img, PPMPixel color)
 	drawSierpinski(x + h/sqrt(3), y + h/3, h/2, img, color);
 }
 
-// draws the Julia fractal on the given image
+// draws an image of the Julia set
 PPMImage* drawJulia(int image_width, int image_height, int zoom) {
 	PPMImage *img = createPPMImage((unsigned int)image_width, (unsigned int)image_height, BLACK);
 	const double cX = -0.7, cY = 0.27015, moveX = 0.0, moveY = 0.0;
@@ -126,7 +126,8 @@ PPMImage* drawJulia(int image_width, int image_height, int zoom) {
 	return img;
 }
 
-// draws the yin yang fractal centered at (xc,yc) on the given image where:
+// draws the yin yang fractal on the given image where:
+// (xc, yc): x and y coordinates of the center of outermost yin yang
 // radius: radius of the outermost yin yang
 // smaller_radius_coefficient: ratio of the inner circle radius to outer circle radius in any given yin yang 
 // iteration: number of nested yin yangs
@@ -196,7 +197,7 @@ void drawCantor(int x, int y, unsigned int length, PPMImage *img, PPMPixel color
 	}
 }
 
-// draws the Barnsley's Fern on the given image, where the fractal gets more and more prominent as the "iteration" number increases
+// draws the Barnsley fern on the given image, where the fractal gets more and more prominent as the "iteration" number increases
 void drawBarnsleyFern(unsigned long long iteration, double size, PPMImage *img) {
 	double x0 = 0, y0 = 0, x1, y1;
 	int rand_num;

@@ -44,6 +44,11 @@ int main() {
 	adjustContrast(img, 50);
 	writePPM("./Examples/Image Manipulation/west_1_contrast_50.ppm", img);
 	deletePPMImage(img);
+	
+	img = readPPM("./Examples/Image Manipulation/west_1.ppm");
+	adjustBlur(img, 3);
+	writePPM("./Examples/Image Manipulation/west_1_blurred_3.ppm", img);
+
 
 
 	PPMImage *mix = createPPMImage(750, 750, BLACK);
