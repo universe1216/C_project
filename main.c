@@ -1,4 +1,4 @@
-#include "Header/imageManipulation.h"
+#include "Header/image_manipulation.h"
 #include "Header/fractals.h"
 
 int main() {
