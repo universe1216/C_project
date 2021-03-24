@@ -182,8 +182,8 @@ void drawTree(int x1, int y1, int main_angle, int branch_angle, unsigned int ite
 	int x2 = x1 - (int)(cos(main_angle * M_PI / 180) * iteration * 10.0);
 	int y2 = y1 - (int)(sin(main_angle * M_PI / 180) * iteration * 10.0);
 	drawLine(x1, y1, x2, y2, img, color);
-	printTree(x2, y2, main_angle - branch_angle, branch_angle, iteration-1, img, color);		// recursion
-	printTree(x2, y2, main_angle + branch_angle, branch_angle, iteration-1, img, color);
+	drawTree(x2, y2, main_angle - branch_angle, branch_angle, iteration-1, img, color);		// recursion
+	drawTree(x2, y2, main_angle + branch_angle, branch_angle, iteration-1, img, color);
 }
 
 // draws the Cantor set on the given image

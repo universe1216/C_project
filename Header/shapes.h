@@ -35,7 +35,7 @@ void drawMultipleCircles(int xc, int yc, unsigned int radius, unsigned int gap, 
 			}
 			else
 				d += 4*x + 6;
-			drawCircle(xc, yc, x, y, img, color);
+			drawMultipleCirclesUtil(xc, yc, x, y, img, color);
 		}
 		radius -= gap;
 	}
