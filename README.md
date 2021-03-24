@@ -12,10 +12,11 @@ test
 
 ## Examples
 
-<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1.ppm></p>
-<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1_negative.ppm></p>
-<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1_grayscale.ppm></p>
-<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1_sepia.ppm></p>
-<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1_brightness_50.ppm></p>
-<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1_contrast_50.ppm></p>
-<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/Examples/Image%20Manipulation/west_1_hue_135.ppm></p>
+<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1.jpg></p>
+<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_negative.jpg></p>
+<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_grayscale.jpg></p>
+<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_sepia.jpg></p>
+<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_brightness_50.jpg></p>
+<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_contrast_50.jpg></p>
+<p align="left"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_hue_135.jpg></p>
+<p align="right"><img src=https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1_blurred_3.jpg></p>
