@@ -8,7 +8,7 @@ A C project for processing PPM images (grayscale, rotate, resize, blur, contrast
 
 
 
-## Run on terminal
+# Run on terminal
 
 ```sh
 gcc main.c -o test
@@ -17,7 +17,7 @@ test
 
 
 
-## Examples
+# Examples
 
 <p float="left">
     <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1.jpg" width="250">
@@ -39,10 +39,9 @@ test
 
 
 
-## Author
+# Author
 
 👤 **Aras Güngöre**
 
 * LinkedIn: [@arasgungore](https://www.linkedin.com/in/arasgungore)
 * Github: [@arasgungore](https://github.com/arasgungore)
-* HackerRank: [@arasgungore](https://www.hackerrank.com/arasgungore)
