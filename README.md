@@ -4,7 +4,8 @@
     <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/all_in_1.jpg" width="750">
 </p>
 
-A C project for processing PPM images (grayscale, rotate, resize, blur, contrast, etc.) and generating popular fractals such as Mandelbrot set, Julia set, Koch curve, Sierpinski triangle, etc.
+A C project which implements a variety of image processing operations that manipulate the size, filter, brightness, contrast, saturation and other properties of a given image from scratch.
+The project also includes recursive fractal generation functions to model popular fractals such as Mandelbrot set, Julia set, Koch curve, and Sierpinski triangle in PPM format.
 
 
 
