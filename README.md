@@ -8,7 +8,7 @@ A C project which implements a variety of image processing operations that manip
 
 
 
-# Run on terminal
+## Run on terminal
 
 ```sh
 gcc main.c -o test
@@ -17,7 +17,7 @@ test
 
 
 
-# Examples
+## Examples
 
 <p float="left">
     <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/west_1.jpg" width="250">
@@ -39,7 +39,7 @@ test
 
 
 
-# Author
+## Author
 
 👤 **Aras Güngöre**
 
