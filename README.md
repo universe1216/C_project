@@ -8,7 +8,7 @@ A C project which implements a variety of image processing operations that manip
 
 
 
-## Run on terminal
+## Run on Terminal
 
 ```sh
 gcc main.c -o test
