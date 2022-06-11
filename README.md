@@ -1,4 +1,4 @@
-# image-manipulation-and-fractals
+# filters-and-fractals
 
 <p align="center">
     <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/all_in_1.jpg" width="750">
