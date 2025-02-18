@@ -37,11 +37,3 @@ test
     <img src="https://github.com/arasgungore/image-manipulation-and-fractals/blob/master/jpg/yinyang_r200_i4.jpg" width="250">
 </p>
 
-
-
-## Author
-
-👤 **Aras Güngöre**
-
-* LinkedIn: [@arasgungore](https://www.linkedin.com/in/arasgungore)
-* GitHub: [@arasgungore](https://github.com/arasgungore)
